@@ -7,15 +7,20 @@ body {
   padding:0 !important;
 }
 .app-main {
-  min-width: 960px;
+  width: 960px;
   margin: 30px auto 0 auto;
 }
 .main-left {
-  width: 640px;
+  width: 500px;
+  padding-left:15px;
 }
 .main-right {
   width: 280px;
-  margin:0 0 0 40px;
+  margin:0 0 0 30px;
+}
+.split-line {
+  margin: -5px 0 15px;
+  border-top: 1px solid #f0f0f0;
 }
 /*---------------------headerComponent----------------------------*/
 .header-component {
@@ -177,9 +182,9 @@ body {
   border: 1px solid #ddd;
   border-radius: 3px;
 }
-/*------------------------main--------------------------*/
-.main .mainCarousel {
-  margin-bottom: 35px;
+/*------------------------homepage--------------------------*/
+.homepage .homepageCarousel {
+
   border-radius: 6px;
   overflow: hidden;
   z-index: 1000;
@@ -187,18 +192,21 @@ body {
   height: 210px;
   position: relative;
 }
-.main .mainCarousel .carouselshow {
+.homepage .homepageCarousel ul {
+  overflow: hidden;
+}
+.homepage .homepageCarousel .carouselshow {
   width: 485px;
   height: 210px;
 }
-.main .mainCarousel li {
+.homepage .homepageCarousel li {
   position: absolute;
 }
-.main .mainCarousel img {
+.homepage .homepageCarousel img {
   width: 485px;
   height: 210px;
 }
-.main .mainCarousel .carousel-bar {
+.homepage .homepageCarousel .carousel-bar {
   position: absolute;
   width: 100%;
   bottom: 10px;
@@ -206,14 +214,61 @@ body {
   z-index: 10;
   text-align: center;
 }
-.main .mainCarousel .carousel-bar span {
+.homepage .homepageCarousel .carousel-bar span {
   width: 20px;
   height: 5px;
-  border: 1px solid;
-  background: white;
+  border: 1px solid hsla(0,0%,47%,.4);
+  background-color: hsla(0,0%,47%,.4);
   display: inline-block;
   margin-right: 10px;
 }
-.main .mainCarousel .active {
+.homepage .homepageCarousel .active {
   background: white !important;
+}
+/*-------------carousel-transition--------------------*/
+.carousel-enter-active {
+  transform: translateX(0);
+  transition: all 1.5s ease;
+}
+.carousel-leave-active {
+  transform: translateX(-100%);
+  transition: all 1.5s ease;
+}
+.carousel-enter {
+  transform: translateX(100%);
+}
+.carousel-leave {
+  transform: translateX(0);
+}
+
+.homepage .hots {
+  margin:30px 0 20px 0;
+}
+.homepage .hots .hot {
+  display: inline-block;
+  margin: 0 18px 18px 0;
+  min-height: 32px;
+  background-color: #f7f7f7;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  vertical-align: top;
+  overflow: hidden;
+}
+.homepage .hots .hot img {
+  width: 32px;
+  height: 32px;
+}
+.homepage .hots .hot .name {
+  display: inline-block;
+  padding: 0 11px 0 6px;
+  font-size: 14px;
+}
+.homepage .hots .more-hot {
+  display: block;
+  margin-top: 7px;
+  font-size: 14px;
+  color: #787878;
+}
+.homepage .more-hot i {
+  margin-left: -5px;
 }

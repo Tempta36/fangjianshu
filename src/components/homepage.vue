@@ -1,0 +1,73 @@
+<template>
+  <div class="homepage">
+    <div class="main-left">
+      <div class="homepageCarousel" @mouseover="clearTimer()" @mouseout="selfAdd()">
+        <div class="carouselshow">
+          <transition-group  tag="ul" name="carousel">
+            <li v-for="(img,index) in carouselImg" :key="index" v-show="mark === index">
+              <a href="#"><img :src="img"/></a>
+            </li>
+          </transition-group>
+        </div>
+        <div class="carousel-bar">
+          <span v-for="(item,index) in carouselImg" :key="index" :class="{active: mark === index}" @click="changeMark(index)"></span>
+        </div>
+      </div>
+      <div class="hots">
+        <a href="#" class="hot" @click="viewMore(hot.name)" v-for="hot in hots">
+          <img :src="hot.src" alt=""><span class="name" v-text="hot.name"></span>
+        </a>
+        <a href="#" class="more-hot">更多热门主题<i class="iconfont ic-link"></i></a>
+      </div>
+      <div class="split-line"></div>
+    </div>
+    <div class="main-right">
+
+    </div>
+  </div>
+</template>
+
+<script>
+
+  export default {
+    data(){
+      return {
+        timer:null,
+        mark:0,  //比对图片索引的变量
+        carouselImg:[
+          '../../static/img/carousel1.jpg',
+          '../../static/img/carousel2.jpg',
+          '../../static/img/carousel3.jpg'
+        ],
+        hots:[
+          {src:'../../static/img/hot1.jpg',name:'人文社科'},
+          {src:'../../static/img/hot2.jpg',name:'@IT·互联网'},
+          {src:'../../static/img/hot3.jpg',name:'读书'},
+          {src:'../../static/img/hot4.jpg',name:'手绘'},
+          {src:'../../static/img/hot5.png',name:'旅行·在路上'},
+          {src:'../../static/img/hot6.jpg',name:'故事'},
+          {src:'../../static/img/hot7.jpg',name:'历史'},
+        ]
+      }
+    },
+    methods:{
+      selfAdd(){
+        var self = this;
+        self.timer = setInterval(function(){
+          self.mark++; if(self.mark===3){self.mark=0;}},3500);
+      },
+      changeMark(index){
+        this.mark = index;
+      },
+      clearTimer(){
+        clearInterval(this.timer);
+      },
+      viewMore(theme){
+        this.$store.dispatch('confirmAuthor',theme);
+      }
+    },
+    created(){
+      this.selfAdd();
+    }
+  }
+</script>
