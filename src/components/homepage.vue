@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="hots">
-        <a href="#" class="hot" @click="viewMore(hot.name)" v-for="hot in hots">
+        <a class="hot" @click="viewMore(hot.name)" v-for="hot in hots">
           <img :src="hot.src" alt=""><span class="name" v-text="hot.name"></span>
         </a>
         <a href="#" class="more-hot">更多热门主题<i class="iconfont ic-link"></i></a>
@@ -64,6 +64,7 @@
       },
       viewMore(theme){
         this.$store.dispatch('confirmAuthor',theme);
+        this.$router.push('/author');
       }
     },
     created(){

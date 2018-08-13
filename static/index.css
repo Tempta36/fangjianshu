@@ -11,12 +11,14 @@ body {
   margin: 30px auto 0 auto;
 }
 .main-left {
-  width: 500px;
+  width: 550px;
   padding-left:15px;
+  display: inline-table;
 }
 .main-right {
   width: 280px;
-  margin:0 0 0 30px;
+  margin:0 0 0 100px;
+  display: inline-table;
 }
 .split-line {
   margin: -5px 0 15px;

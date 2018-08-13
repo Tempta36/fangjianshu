@@ -6,8 +6,8 @@ import Vuex from 'vuex'
 import * as actions from './actions.js'
 import * as getters from './getters.js'
 
-import * as Main from './modules/main.js'
-import * as Author from './modules/author.js'
+import Main from './modules/main.js'
+import Author from './modules/author.js'
 
 Vue.use(Vuex);
 
