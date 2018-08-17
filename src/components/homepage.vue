@@ -22,14 +22,33 @@
       <div class="split-line"></div>
     </div>
     <div class="main-right">
-
+      <div class="board">
+        <a href="#"><img src="../../static/img/banner.png" alt=""></a>
+        <a href="#"><img src="../../static/img/banner2.png" alt=""></a>
+        <a href="#"><img src="../../static/img/banner3.png" alt=""></a>
+        <a href="#"><img src="../../static/img/banner4.png" alt=""></a>
+        <a href="#"><img src="../../static/img/banner5.png" alt=""></a>
+      </div>
+      <a href="#" id="download-qrcode">
+        <img src="../../static/img/qrcode.png" alt="" class="qrcode">
+        <div class="info">
+          <div class="title">下载简书手机App<i class="iconfont ic-link"></i></div>
+          <div class="description">随时随地发现和创作内容</div>
+        </div>
+      </a>
+      <recommended-author></recommended-author>
     </div>
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
+import recommendedAuthor from './recommendedAuthor'
 
   export default {
+    components:{
+      recommendedAuthor
+    },
     data(){
       return {
         timer:null,

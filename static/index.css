@@ -13,12 +13,12 @@ body {
 .main-left {
   width: 550px;
   padding-left:15px;
-  display: inline-table;
+  float: left;
 }
 .main-right {
   width: 280px;
   margin:0 0 0 100px;
-  display: inline-table;
+  display: inline-block;
 }
 .split-line {
   margin: -5px 0 15px;
@@ -274,3 +274,44 @@ body {
 .homepage .more-hot i {
   margin-left: -5px;
 }
+.homepage .board  {
+  margin-top: -4px;
+  padding-bottom: 4px;
+  min-height: 228px;
+}
+.homepage .board img {
+  width: 100%;
+  min-height: 50px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+}
+.homepage #download-qrcode {
+  margin-bottom: 30px;
+  padding: 10px 22px;
+  width: 100%;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  background-color: #fff;
+  display: inline-block;
+}
+.homepage #download-qrcode .qrcode {
+  width: 60px;
+  height: 60px;
+  opacity: .85;
+}
+.homepage #download-qrcode .info {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 7px;
+}
+.homepage #download-qrcode .info .title {
+  font-size: 15px;
+  color: #333;
+}
+.homepage #download-qrcode .info .description {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #999;
+}
+
+

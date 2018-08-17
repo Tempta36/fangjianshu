@@ -6,3 +6,7 @@ import * as types from './mutation-types.js'
 export const confirmAuthor = ({commit},str)=>{
   commit(types.CONFIRM_AUTHOR,str)
 };
+
+export const anotherAuthors = ({commit}) =>{
+  commit(types.ANOTHER_AUTHORS)
+};

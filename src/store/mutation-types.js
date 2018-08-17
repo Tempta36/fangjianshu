@@ -3,3 +3,5 @@
  */
 
 export const CONFIRM_AUTHOR = 'confirmAuthor';
+
+export const ANOTHER_AUTHORS = 'anotherAuthors';

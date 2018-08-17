@@ -76,6 +76,7 @@ export default {
   },
   methods:{
     chooseArticles(str){
+      //实现最新评论、最新收录、热门的选中状态的显示
       this.moreInfo = this.author.more;
 
       switch (str) {
