@@ -86,6 +86,10 @@ const authors = [
     }]
 ];
 
+
+
+
+
 let i= 0;
 const state = {
   authors:authors[i]

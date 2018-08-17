@@ -4,33 +4,33 @@
     <div class="main">
       <h4 class="title">
         <div class="normal-title">
-          <a href="#" class="active">登陆</a><b>·</b><a href="#">注册</a>
+          <a href="/signIn" class="active">登陆</a><b>·</b><a href="/signUp">注册</a>
         </div>
       </h4>
       <div class="signIn-container">
         <form action="#" id="new_session">
           <div class="input-prepend restyle js-normal">
-            <input placeholder="手机号或邮箱" type="text" name="session[email_or_mobile_number]" id="session_email_or_mobile_number">
+            <input placeholder="手机号或邮箱" type="text"  id="email_or_mobile_number" v-model="username">
             <i class="iconfont ic-user"></i>
           </div>
           <div class="input-prepend">
-            <input placeholder="密码" type="password" name="session[password]" id="session_password">
+            <input placeholder="密码" type="password" id="password" v-model="password">
             <i class="iconfont ic-password"></i>
           </div>
           <div class="remember-btn">
-            <input type="checkbox" value="true" checked="checked" name="session[remember_me]" id="session_remember_me">
+            <input type="checkbox" v-model="isChecked" checked="checked" id="remember_me" @click="changeCheckStatus()">
             <span>记住我</span>
           </div>
           <div class="forget-btn">
             <a class="" data-toggle="dropdown" href="">登录遇到问题?</a>
             <ul class="dropdown-menu">
-              <li><a href="/users/password/mobile_reset">用手机号重置密码</a></li>
-              <li><a href="/users/password/email_reset">用邮箱重置密码</a></li>
-              <li><a target="_blank" href="/p/9058d0b8711d">无法用海外手机号登录</a></li>
-              <li><a target="_blank" href="/p/498a9fa7da08">无法用 Google 帐号登录</a></li>
+              <li><a href="">用手机号重置密码</a></li>
+              <li><a href="">用邮箱重置密码</a></li>
+              <li><a href="">无法用海外手机号登录</a></li>
+              <li><a href="">无法用 Google 帐号登录</a></li>
             </ul>
           </div>
-          <button class="sign-in-button" id="sign-in-form-submit-btn" type="button">
+          <button class="sign-in-button" id="sign-in-form-submit-btn" type="button" @click="signInBtnClick()">
             <span id="sign-in-loading"></span>登录
           </button>
         </form>
@@ -42,10 +42,10 @@
                 <i class="iconfont ic-weibo"></i>
               </a>
             </li>
-            <li><a class="weixin" target="_blank" href="/users/auth/wechat"><i class="iconfont ic-wechat"></i></a></li>
-            <li><a class="qq" target="_blank" href="/users/auth/qq_connect"><i class="iconfont ic-qq_connect"></i></a></li>
+            <li><a class="weixin" href=""><i class="iconfont ic-wechat"></i></a></li>
+            <li><a class="qq" href=""><i class="iconfont ic-qq_connect"></i></a></li>
             <li class="js-more-method"><a href="javascript:void(0);"><i class="iconfont ic-more"></i></a></li>
-            <li class="js-hide-method hide"><a class="douban" target="_blank" href="/users/auth/douban"><i class="iconfont ic-douban"></i></a></li>
+            <li class="js-hide-method hide"><a class="douban" href=""><i class="iconfont ic-douban"></i></a></li>
           </ul>
 
           <div class="weibo-geetest-captcha"></div>
@@ -57,6 +57,53 @@
 
 <script>
 
+export default {
+  data(){
+    return {
+      isChecked:true,
+      username:'',
+      password:''
+    }
+  },
+  methods:{
+    signInBtnClick(){
+      let username = this.username.trim();
+      let password = this.password.trim();
+      if(username === '' || password === ''){
+        alert('手机号/邮箱或密码不能为空');
+        this.username = '';
+        this.password = '';
+      }else {
+        let data = [];
+        let _this = this;
+
+        //请求后台接口，验证用户名和密码是否一致
+        this.$axios.get('../static/user.json').then(function(res){
+          data = res.data.result;
+
+          for (let i=0; i < data.length; i++) {
+            if(username === data[i].username && password === data[i].password){
+              //登陆成功
+              console.log('log in success!');
+              if(_this.isChecked){
+                sessionStorage.setItem(username,password);
+              }
+              return
+            }
+          }
+          alert('手机号/邮箱或密码不正确，请重新输入！');
+          _this.password = '';
+
+        }).catch(function(res){
+          console.log(res);
+        });
+      }
+    },
+    changeCheckStatus(){
+      this.isChecked = !this.isChecked;  console.log(this.isChecked)
+    }
+  }
+}
 </script>
 
 <style>
@@ -66,15 +113,19 @@
   text-align: center;
   font-size: 14px;
   background-color: #f1f1f1;
+  margin-top: -30px;
 }
 .sign .logo {
   position: absolute;
-  top: 56px;
-  margin-left: 50px;
+  top: 28px;
+  /*margin-left: 50px;*/
+}
+.sign .logo img {
+  width: 170px;
 }
 .sign .main {
   width: 400px;
-  margin: 60px auto 0;
+  margin: 110px auto 0;
   padding: 50px 50px 30px;
   background-color: #fff;
   border-radius: 4px;

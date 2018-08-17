@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <header-component></header-component>
+    <header-component v-show="display"></header-component>
     <div class="app-main">
       <router-view
                 class="view"
@@ -18,6 +18,21 @@ export default {
   name: 'App',
   components:{
     HeaderComponent
+  },
+  data(){
+    return {
+      display:true,
+      hash:window.location.hash
+    }
+  },
+  watch:{
+    $route(to,from){
+      if(to.path === '/signIn' || to.path === '/signUp'){
+        this.display = false;
+      }else {
+        this.display = true;
+      }
+    }
   }
 }
 </script>

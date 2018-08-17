@@ -99,6 +99,10 @@ export default {
 </script>
 
 <style>
+.author {
+  width: 960px;
+  margin: 0 auto;
+}
 .author .author-top {
   margin-bottom: 35px;
 }

@@ -7,12 +7,11 @@ body {
   padding:0 !important;
 }
 .app-main {
-  width: 960px;
   margin: 30px auto 0 auto;
 }
 .main-left {
-  width: 550px;
-  padding-left:15px;
+  width: 520px;
+  padding-left:50px;
   float: left;
 }
 .main-right {
@@ -185,6 +184,10 @@ body {
   border-radius: 3px;
 }
 /*------------------------homepage--------------------------*/
+.homepage {
+  width: 960px;
+  margin: 0 auto;
+}
 .homepage .homepageCarousel {
 
   border-radius: 6px;
