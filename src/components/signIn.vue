@@ -1,10 +1,10 @@
 <template>
   <div class="sign">
-    <div class="logo"><a href=""><img src="../../static/img/logo.png" alt="LOGO"></a></div>
+    <div class="logo"><a href="/"><img src="../../static/img/logo.png" alt="LOGO"></a></div>
     <div class="main">
       <h4 class="title">
         <div class="normal-title">
-          <a href="/signIn" class="active">登陆</a><b>·</b><a href="/signUp">注册</a>
+          <a @click="toSignIn()" class="active">登陆</a><b>·</b><a @click="toSignUp()">注册</a>
         </div>
       </h4>
       <div class="signIn-container">
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 
 export default {
   data(){
@@ -65,7 +66,18 @@ export default {
       password:''
     }
   },
+  computed:{
+    ...mapState({
+      users: state=> state.Users.users
+    })
+  },
   methods:{
+    toSignIn(){
+      event.stopPropagation();
+    },
+    toSignUp(){
+      this.$router.push({path:'/signUp'});
+    },
     signInBtnClick(){
       let username = this.username.trim();
       let password = this.password.trim();
@@ -74,29 +86,27 @@ export default {
         this.username = '';
         this.password = '';
       }else {
-        let data = [];
         let _this = this;
 
-        //请求后台接口，验证用户名和密码是否一致
-        this.$axios.get('../static/user.json').then(function(res){
-          data = res.data.result;
-
-          for (let i=0; i < data.length; i++) {
-            if(username === data[i].username && password === data[i].password){
+        //验证登陆。首先在本地存储中查看是否存在该用户名并校验
+        if(sessionStorage.getItem(username) && sessionStorage.getItem(username) === password){
+          console.log('log in success!  ----session');
+        }else{
+          //若本地存储无该用户名信息，则请求后台接口，验证用户名和密码是否一致
+          let usersArr = this.users;
+          for (let i=0; i < usersArr.length; i++) {
+            if(username === usersArr[i].username && password === usersArr[i].password){
               //登陆成功
-              console.log('log in success!');
+              console.log('log in success!   -----database');
               if(_this.isChecked){
                 sessionStorage.setItem(username,password);
               }
-              return
+              return 0;
             }
           }
           alert('手机号/邮箱或密码不正确，请重新输入！');
           _this.password = '';
-
-        }).catch(function(res){
-          console.log(res);
-        });
+        }
       }
     },
     changeCheckStatus(){

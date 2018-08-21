@@ -5,36 +5,26 @@
       <div class="main">
         <h4 class="title">
           <div class="normal-title">
-            <a class="" href="/signIn">登录</a>
+            <a @click="toSignIn()">登录</a>
             <b>·</b>
-            <a id="js-sign-up-btn" class="active" href="">注册</a>
+            <a id="js-sign-up-btn" class="active" @click="toSignUp()">注册</a>
           </div>
         </h4>
         <div class="js-sign-up-container">
-          <form class="new_user" id="new_user" action="" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="jzqKinA+mP1raG3N2RaNWZtfKe/UTnaCgPaj3MtTA34+tDvHIASgZ7h18xSP7fyDvHdV9PKBRTxVsec/zcfBsA==">
+          <form class="new_user" id="new_user" accept-charset="UTF-8">
             <div class="input-prepend restyle">
-              <input placeholder="你的昵称" type="text" value="" name="user[nickname]" id="user_nickname">
+              <input placeholder="你的昵称" type="text" v-model="nickname" id="user_nickname" @focus="cancelShow('tooltip1')">
               <i class="iconfont ic-user"></i>
             </div>
             <div class="input-prepend restyle no-radius js-normal">
-              <input type="hidden" value="CN" id="user_mobile_number_country_code">
-              <input placeholder="手机号" type="tel" id="user_mobile_number">
+              <input placeholder="手机号" type="tel" id="user_mobile_number" v-model="mobileNumber" @focus="cancelShow('tooltip2')">
               <i class="iconfont ic-phonenumber"></i>
             </div>
-            <input type="hidden" id="oversea" value="false">
-            <input type="hidden" id="force_user_nonexist" value="true">
-            <div class="input-prepend restyle no-radius security-up-code js-security-number hide">
-              <input type="text" id="sms_code" placeholder="手机验证码">
-              <i class="iconfont ic-verify"></i>
-              <a tabindex="-1" class="btn-up-resend js-send-code-button disable" href="javascript:void(0);" id="send_code">发送验证码</a>
-              <div><div class="captcha"><input autocomplete="off" type="hidden" value="df7f442b0b5a34cea348a03e44e7fa10"> <input autocomplete="off" type="hidden"> <input autocomplete="off" type="hidden" value=""> <input autocomplete="off" type="hidden" value=""> <input autocomplete="off" type="hidden" value=""> <div id="geetest-area" class="geetest"></div></div></div>
-            </div>
-            <input type="hidden" id="security_number">
             <div class="input-prepend">
-              <input placeholder="设置密码" type="password" id="user_password">
+              <input placeholder="设置密码" type="password" id="user_password" v-model="password" @focus="cancelShow('tooltip3')">
               <i class="iconfont ic-password"></i>
             </div>
-            <input type="submit" name="commit" value="注册" class="sign-up-button" id="sign_up_btn" data-disable-with="注册">
+            <input type="button" value="注册" @click="signUpSubmit()" class="sign-up-button" id="sign_up_btn" data-disable-with="注册">
             <p class="sign-up-msg">点击 “注册” 即表示您同意并愿意遵守简书<br> <a  href="">用户协议</a> 和 <a href="">隐私政策</a> 。</p>
           </form>
           <!-- 更多注册方式 -->
@@ -45,6 +35,21 @@
               <li><a id="qq" class="qq" href=""><i class="iconfont ic-qq_connect"></i></a></li>
             </ul>
           </div>
+          <div class="tooltip tooltip-error fade right" role="tooltip" id="tooltip1" style="top: 7px; left: 300px; display: block;">
+            <div class="tooltip-arrow tooltip-arrow-border" style="top: 50%;"></div>
+            <div class="tooltip-arrow tooltip-arrow-bg" style="top: 50%;"></div>
+            <div class="tooltip-inner"><i class="iconfont ic-error"></i><span>请输入昵称</span></div>
+          </div>
+          <div class="tooltip tooltip-error fade right" role="tooltip" id="tooltip2" style="top: 57px; left: 300px; display: block;">
+            <div class="tooltip-arrow tooltip-arrow-border" style="top: 50%;"></div>
+            <div class="tooltip-arrow tooltip-arrow-bg" style="top: 50%;"></div>
+            <div class="tooltip-inner"><i class="iconfont ic-error"></i><span>请输入正确的手机号</span></div>
+          </div>
+          <div class="tooltip tooltip-error fade right" role="tooltip" id="tooltip3" style="top: 107px; left: 300px; display: block;">
+            <div class="tooltip-arrow tooltip-arrow-border" style="top: 50%;"></div>
+            <div class="tooltip-arrow tooltip-arrow-bg" style="top: 50%;"></div>
+            <div class="tooltip-inner"><i class="iconfont ic-error"></i><span>密码不能少于6个字符</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -52,13 +57,57 @@
 </template>
 
 <script>
+export default {
+  data(){
+    return {
+      nickname:'',
+      mobileNumber:'',
+      password:''
+    }
+  },
+  methods:{
+    toSignIn(){
+      this.$router.push({path:"/signIn"})
+    },
+    toSignUp(){
+      event.stopPropagation();
+    },
+    signUpSubmit(){
+      let flag = 0;
+      if(this.nickname === '' || !this.nickname.match(/^[\u4e00-\u9fa5A-Za-z0-9-_]*$/)){
+        let tip = document.getElementById('tooltip1');
+        tip.className = 'tooltip tooltip-error right in';
+        flag +=1;
+      }
+      if(this.mobileNumber === '' || !this.mobileNumber.match(/^(\(\d{3,4}\)|\d{3,4}-)?\d{7,8}$/)){
+        let tip = document.getElementById('tooltip2');
+        tip.className = 'tooltip tooltip-error right in';
+        flag +=1;
+      }
+      if(this.password === '' || this.password.match(/^[a-zA-Z]\w{5,17}$/)){
+        let tip = document.getElementById('tooltip3');
+        tip.className = 'tooltip tooltip-error right in';
+        flag +=1;
+      }
+      if(flag !== 0){
+        return 0;
+      }else{
 
+      }
+    },
+    cancelShow(id){
+      let tip = document.getElementById(id);
+      tip.className = 'tooltip tooltip-error right fade';
+    }
+  }
+}
 </script>
 
 <style>
 .signUp {
   margin-top: -30px;
   height: 100%;
+  min-width: 960px;
   min-height: 750px;
   text-align: center;
   font-size: 14px;
@@ -99,6 +148,9 @@
 }
 .signUp .title b {
   padding: 10px;
+}
+.signUp .js-sign-up-container {
+  position: relative;
 }
 .signUp form {
   margin-bottom: 30px;
@@ -163,7 +215,7 @@
   color: #3194d0;
 }
 .signUp .more-sign {
-  margin-top: 50px;
+  margin-top: 20px;
 }
 .signUp .more-sign h6 {
   position: relative;
@@ -193,5 +245,74 @@
 }
 .signUp .more-sign .ic-qq_connect {
   color: #498ad5;
+}
+
+/*------------错误提示-----------*/
+.sign .tooltip-error {
+  font-size: 14px;
+  line-height: 25px;
+  white-space: nowrap;
+  background: none;
+  position: absolute;
+}
+.tooltip.fade {
+  opacity: 0;
+  transition: opacity .15s linear;
+}
+.tooltip.right {
+  margin-left: 3px;
+  padding: 0 5px;
+}
+.tooltip.in {
+  opacity: .9;
+  filter: alpha(opacity=90);
+}
+.sign .tooltip-error.right .tooltip-arrow-border {
+  border-right-color: #ea6f5a;
+}
+.tooltip.right .tooltip-arrow {
+  top: 50%;
+  left: 0;
+  margin-top: -5px;
+  border-width: 5px 5px 5px 0;
+  border-right-color: #000;
+}
+.tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.sign .tooltip-error.right .tooltip-arrow-bg {
+  left: 2px;
+  border-right-color: #fff;
+}
+.sign .tooltip-error .tooltip-inner {
+  max-width: 280px;
+  color: #333;
+  border: 1px solid #ea6f5a;
+  background-color: #fff;
+}
+.tooltip-inner {
+  max-width: 200px;
+  padding: 3px 8px;
+  color: #fff;
+  text-align: center;
+  background-color: #000;
+  border-radius: 4px;
+}
+.sign .tooltip-error .tooltip-inner i {
+  position: static;
+  margin-right: 5px;
+  font-size: 20px;
+  color: #ea6f5a;
+  vertical-align: middle;
+}
+.sign .tooltip-error .tooltip-inner span {
+  vertical-align: middle;
+  display: inline-block;
+  /*white-space: normal;*/
+  max-width: 230px;
 }
 </style>

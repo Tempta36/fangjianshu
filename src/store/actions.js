@@ -10,3 +10,7 @@ export const confirmAuthor = ({commit},str)=>{
 export const anotherAuthors = ({commit}) =>{
   commit(types.ANOTHER_AUTHORS)
 };
+
+export const signUpUser = ({commit}) =>{
+  commit(types.SIGN_UP_USER);
+};

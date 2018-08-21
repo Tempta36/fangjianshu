@@ -11,6 +11,7 @@ import Author from '../components/author'
 Vue.use(Router);
 
 export default new Router({
+  mode:'history',
   routes: [
     {
       path: '/',
