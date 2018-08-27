@@ -2,9 +2,10 @@
   <div class="header-component">
      <router-link to="/" class="header-logo" ><img src="../../static/img/logo.png"/></router-link>
      <router-link to="/writeArticle" class="btn write-btn"><i class="iconfont ic-write"></i>写文章</router-link>
-     <router-link to="/signUp" class="btn sign-up">注册</router-link>
-     <router-link to="/signIn" class="btn log-in">登录</router-link>
-     <div class="container">
+     <router-link to="/signUp" class="btn sign-up" v-if="!userInfo.login">注册</router-link>
+     <router-link to="/signIn" class="btn log-in" v-if="!userInfo.login">登录</router-link>
+     <span class="btn log-in" v-if="userInfo.login">你好，{{userInfo.username}}</span>
+     <div class="container">{{userInfo}}
         <ul class="nav navbar-nav">
            <li class="tab active"><router-link to="/"><span class="menu-text">首页</span><i class="iconfont ic-navigation-discover menu-icon"></i></router-link></li>
            <li class="tab"><router-link to="/download" class="app-download-btn"><span class="menu-text">下载APP</span><i class="iconfont menu-icon ic-navigation-download"></i></router-link></li>
@@ -40,8 +41,20 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
 export default {
+  data(){
+    return {
+    }
+  },
+  computed:{
+    ...mapState({
+      userInfo: state=> state.Users
+    })
+  },
+  methods:{
 
+  }
 }
 </script>
 

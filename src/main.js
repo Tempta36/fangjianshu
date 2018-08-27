@@ -6,6 +6,8 @@ import router from './router'
 import store from './store'
 import Axios from 'axios'
 
+import * as utils from './utils'
+
 Vue.config.productionTip = false;
 Vue.prototype.$axios = Axios;
 

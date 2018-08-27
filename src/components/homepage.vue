@@ -20,6 +20,8 @@
         <a href="#" class="more-hot">更多热门主题<i class="iconfont ic-link"></i></a>
       </div>
       <div class="split-line"></div>
+      <!--按需加载文章-->
+      <article-list :articleList="articles"></article-list>
     </div>
     <div class="main-right">
       <div class="board">
@@ -44,10 +46,17 @@
 <script>
 import {mapState} from 'vuex'
 import recommendedAuthor from './recommendedAuthor'
+import  ArticleList  from './articleList'
 
   export default {
     components:{
-      recommendedAuthor
+      recommendedAuthor,
+      ArticleList
+    },
+    computed:{
+      ...mapState({
+        articles:state => state.Author.authorInformation[0].articleLists.hots
+      })
     },
     data(){
       return {
@@ -70,6 +79,7 @@ import recommendedAuthor from './recommendedAuthor'
       }
     },
     methods:{
+      //自加1
       selfAdd(){
         var self = this;
         self.timer = setInterval(function(){
@@ -81,8 +91,8 @@ import recommendedAuthor from './recommendedAuthor'
       clearTimer(){
         clearInterval(this.timer);
       },
-      viewMore(theme){
-        this.$store.dispatch('confirmAuthor',theme);
+      viewMore(theme) {
+        this.$store.dispatch('confirmAuthor', theme);
         this.$router.push('/author');
       }
     },

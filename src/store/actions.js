@@ -11,6 +11,11 @@ export const anotherAuthors = ({commit}) =>{
   commit(types.ANOTHER_AUTHORS)
 };
 
-export const signUpUser = ({commit}) =>{
-  commit(types.SIGN_UP_USER);
+export const signUpUser = ({commit},payload) =>{
+  commit(types.SIGN_UP_USER,payload);
+};
+
+export const getUserInfo = ({commit,state},str) => {
+  commit(types.GET_USER_INFO,str);
+  console.log(state.Users.user);
 };

@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
   data(){
@@ -67,8 +67,8 @@ export default {
     }
   },
   computed:{
-    ...mapState({
-      users: state=> state.Users.users
+    ...mapGetters({
+      user:'userInfo'
     })
   },
   methods:{
@@ -90,22 +90,25 @@ export default {
 
         //验证登陆。首先在本地存储中查看是否存在该用户名并校验
         if(sessionStorage.getItem(username) && sessionStorage.getItem(username) === password){
-          console.log('log in success!  ----session');
+          alert('log in success!  ----session');
+          _this.$router.push('/');
         }else{
           //若本地存储无该用户名信息，则请求后台接口，验证用户名和密码是否一致
-          let usersArr = this.users;
-          for (let i=0; i < usersArr.length; i++) {
-            if(username === usersArr[i].username && password === usersArr[i].password){
-              //登陆成功
-              console.log('log in success!   -----database');
-              if(_this.isChecked){
-                sessionStorage.setItem(username,password);
-              }
-              return 0;
+          this.$store.dispatch('getUserInfo',_this.username);
+          console.log(_this.user);
+
+          if(username === _this.user.username && password === _this.user.password){
+            //登陆成功
+            alert('log in success!   -----database');
+            this.$store.dispatch('signUpUser',{username:username,password:password,isChecked:_this.isChecked});
+            if(_this.isChecked){
+              sessionStorage.setItem(username,password);
             }
+            _this.$router.push('/');
+          }else {
+            alert('手机号/邮箱或密码不正确，请重新输入！');
+            _this.password = '';
           }
-          alert('手机号/邮箱或密码不正确，请重新输入！');
-          _this.password = '';
         }
       }
     },

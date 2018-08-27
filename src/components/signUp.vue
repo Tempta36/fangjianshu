@@ -74,17 +74,18 @@ export default {
     },
     signUpSubmit(){
       let flag = 0;
+      //判断输入框的输入是否为空或者是否规范
       if(this.nickname === '' || !this.nickname.match(/^[\u4e00-\u9fa5A-Za-z0-9-_]*$/)){
         let tip = document.getElementById('tooltip1');
         tip.className = 'tooltip tooltip-error right in';
         flag +=1;
       }
-      if(this.mobileNumber === '' || !this.mobileNumber.match(/^(\(\d{3,4}\)|\d{3,4}-)?\d{7,8}$/)){
+      if(this.mobileNumber === '' || !this.mobileNumber.match(/^\d{11}$/)){
         let tip = document.getElementById('tooltip2');
         tip.className = 'tooltip tooltip-error right in';
         flag +=1;
       }
-      if(this.password === '' || this.password.match(/^[a-zA-Z]\w{5,17}$/)){
+      if(this.password === '' || !this.password.match(/^[a-zA-Z]\w{5,17}$/)){
         let tip = document.getElementById('tooltip3');
         tip.className = 'tooltip tooltip-error right in';
         flag +=1;
@@ -92,9 +93,17 @@ export default {
       if(flag !== 0){
         return 0;
       }else{
-
+        //注册成功
+        this.$store.dispatch('signUpUser',{
+          username:this.nickname,
+          mobilePhone:this.mobileNumber,
+          password:this.password
+        });
+        alert('sign up success and you will log in automatically');
+        this.$router.push('/');
       }
     },
+    //错误提示显示之后，当鼠标聚焦在输入框中，对应的错误提示不显示
     cancelShow(id){
       let tip = document.getElementById(id);
       tip.className = 'tooltip tooltip-error right fade';

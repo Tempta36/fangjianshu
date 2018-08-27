@@ -15,7 +15,7 @@
         <li :class="{active: check[1]===true}"><a href="#" @click="chooseArticles('latestRecords')"><i class="iconfont ic-articles"></i>最新收录</a></li>
         <li :class="{active: check[2]===true}"><a href="#" @click="chooseArticles('hots')"><i class="iconfont ic-hot"></i>热门</a></li>
       </ul>
-      <div id="list-container">
+      <div class="list-container">
         <ul class="note-list">
           <li class="have-img" v-for="item in articles">
             <a href="#" class="wrap-img"><img :src="item.img" alt="" class="img-blur-done"></a>
@@ -174,67 +174,6 @@ export default {
 .author .trigger-menu i {
   margin-right: 5px;
   font-size: 17px;
-}
-.author #list-container .note-list{
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.author #list-container li.have-img {
-  position: relative;
-  width: 100%;
-  margin: 0 0 15px;
-  padding: 15px 2px 20px 0;
-  border-bottom: 1px solid #f0f0f0;
-  word-wrap: break-word;
-}
-.author #list-container .wrap-img {
-  position: absolute;
-  top: 50%;
-  margin-top: -60px;
-  right: 0;
-  width: 125px;
-  height: 100px;
-}
-.author #list-container .wrap-img img {
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
-  border: 1px solid #f0f0f0;
-}
-.author #list-container li.have-img>div {
-  padding-right: 135px;
-}
-.author #list-container li.have-img>div .title {
-  font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
-  margin: -7px 0 4px;
-  display: inherit;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.5;
-}
-.author #list-container li.have-img>div .title:hover {
-  text-decoration: underline;
-}
-.author #list-container .note-list .abstract {
-  margin: 0 0 8px;
-  font-size: 13px;
-  line-height: 24px;
-  color: #999;
-}
-.author #list-container .note-list .meta {
-  padding-right: 0!important;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 20px;
-}
-.author #list-container .note-list .meta a {
-  margin-right: 10px;
-  color: #b4b4b4;
-}
-.author #list-container .note-list .meta span {
-  margin-right: 10px;
-  color: #b4b4b4;
 }
 .author .main-right .title {
   float: left;
