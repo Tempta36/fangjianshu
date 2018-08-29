@@ -89,20 +89,21 @@ export default {
         let _this = this;
 
         //验证登陆。首先在本地存储中查看是否存在该用户名并校验
-        if(sessionStorage.getItem(username) && sessionStorage.getItem(username) === password){
-          alert('log in success!  ----session');
+        let username_session = localStorage.getItem(username);
+        if(username_session && username_session === password){
+          this.$store.dispatch('signUpUser',{username:username,password:password,login:true});
+          sessionStorage.setItem('isLogin','true');
           _this.$router.push('/');
         }else{
           //若本地存储无该用户名信息，则请求后台接口，验证用户名和密码是否一致
           this.$store.dispatch('getUserInfo',_this.username);
-          console.log(_this.user);
 
           if(username === _this.user.username && password === _this.user.password){
             //登陆成功
-            alert('log in success!   -----database');
-            this.$store.dispatch('signUpUser',{username:username,password:password,isChecked:_this.isChecked});
+            this.$store.dispatch('signUpUser',{username:username,password:password,login:true});
+            sessionStorage.setItem('isLogin','true');
             if(_this.isChecked){
-              sessionStorage.setItem(username,password);
+              localStorage.setItem(username,password);
             }
             _this.$router.push('/');
           }else {
@@ -113,7 +114,7 @@ export default {
       }
     },
     changeCheckStatus(){
-      this.isChecked = !this.isChecked;  console.log(this.isChecked)
+      this.isChecked = !this.isChecked;
     }
   }
 }

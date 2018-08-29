@@ -2,16 +2,16 @@
   <div class="header-component">
      <router-link to="/" class="header-logo" ><img src="../../static/img/logo.png"/></router-link>
      <router-link to="/writeArticle" class="btn write-btn"><i class="iconfont ic-write"></i>写文章</router-link>
-     <router-link to="/signUp" class="btn sign-up" v-if="!userInfo.login">注册</router-link>
-     <router-link to="/signIn" class="btn log-in" v-if="!userInfo.login">登录</router-link>
-     <span class="btn log-in" v-if="userInfo.login">你好，{{userInfo.username}}</span>
-     <div class="container">{{userInfo}}
+     <router-link to="/signUp" class="btn sign-up" v-if="!userInfo.login || !isLogin">注册</router-link>
+     <router-link to="/signIn" class="btn log-in" v-if="!userInfo.login || !isLogin">登录</router-link>
+     <span class="btn log-in" v-if="isLogin && userInfo.login">你好，{{userInfo.username}}</span>
+     <div class="container">
         <ul class="nav navbar-nav">
-           <li class="tab active"><router-link to="/"><span class="menu-text">首页</span><i class="iconfont ic-navigation-discover menu-icon"></i></router-link></li>
-           <li class="tab"><router-link to="/download" class="app-download-btn"><span class="menu-text">下载APP</span><i class="iconfont menu-icon ic-navigation-download"></i></router-link></li>
+           <li :class="{active: show}" class="tab" @click="toggleActive()"><router-link to="/"><span class="menu-text">首页</span><i class="iconfont ic-navigation-discover menu-icon"></i></router-link></li>
+           <li :class="{active: !show}" class="tab" @click="toggleActive()"><router-link to="/download" class="app-download-btn"><span class="menu-text">下载APP</span><i class="iconfont menu-icon ic-navigation-download"></i></router-link></li>
            <li class="search">
               <form >
-                 <input type="text" placeholder="搜索" class="search-input"/>
+                 <input type="text" placeholder="搜索" class="search-input" @focus="changeWidth('longer')" @blur="changeWidth('shorter')"/>
                  <a class="search-btn"><i class="iconfont ic-search"></i></a>
                  <div class="navbar-search-tips">
                     <div class="search-trending">
@@ -45,15 +45,35 @@
 export default {
   data(){
     return {
+      show:true
     }
   },
   computed:{
+    isLogin:{
+      get(){
+        console.log(Boolean(sessionStorage.getItem('isLogin')))
+        return Boolean(sessionStorage.getItem('isLogin'))
+      },
+      set(){
+        sessionStorage.setItem('isLogin','false')
+      }
+    },
     ...mapState({
-      userInfo: state=> state.Users
+      userInfo: state=> state.Users.user
     })
   },
   methods:{
-
+    toggleActive(){
+      this.show = !this.show;
+    },
+    changeWidth(str){
+      let el = event.target;
+      if(str === 'shorter'){
+        el.style.width = '140px';
+      }else if(str === 'longer'){
+        el.style.width = '200px';
+      }
+    }
   }
 }
 </script>

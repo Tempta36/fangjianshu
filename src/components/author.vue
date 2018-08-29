@@ -5,15 +5,15 @@
         <a href="#" class="author-avatar">
           <img :src="author.img" alt="">
         </a>
-        <a href="#" class="btn btn-success follow"><i class="iconfont ic-follow"></i><span>关注</span></a>
-        <a href="#" class="btn btn-hollow">投稿</a>
+        <a href="javascript:void(0)" class="btn" :class="{'btn-success':isFollow,follow:isFollow,'following':!isFollow,'btn-default':!isFollow}" @click="toggleFollow()"><i class="iconfont"  :class="{'ic-follow':isFollow,'ic-followed':!isFollow}"></i><span v-text="followBtnInfo">关注</span></a>
+        <a href="javascript:void(0)" class="btn btn-hollow">投稿</a>
         <div class="title"><a href="#" class="name" v-text="author.title"></a></div>
         <div class="info">收录了{{author.info.recordCount}}篇文章<br/>{{author.info.followCount}}人关注</div>
       </div>
       <ul class="trigger-menu">
-        <li :class="{active: check[0]===true}"><a href="#" @click="chooseArticles('latestComments')"><i class="iconfont ic-latestcomments"></i>最新评论</a></li>
-        <li :class="{active: check[1]===true}"><a href="#" @click="chooseArticles('latestRecords')"><i class="iconfont ic-articles"></i>最新收录</a></li>
-        <li :class="{active: check[2]===true}"><a href="#" @click="chooseArticles('hots')"><i class="iconfont ic-hot"></i>热门</a></li>
+        <li :class="{active: check[0]===true}"><a href="javascript:;" @click="chooseArticles('latestComments')"><i class="iconfont ic-latestcomments"></i>最新评论</a></li>
+        <li :class="{active: check[1]===true}"><a href="javascript:;" @click="chooseArticles('latestRecords')"><i class="iconfont ic-articles"></i>最新收录</a></li>
+        <li :class="{active: check[2]===true}"><a href="javascript:;" @click="chooseArticles('hots')"><i class="iconfont ic-hot"></i>热门</a></li>
       </ul>
       <div class="list-container">
         <ul class="note-list">
@@ -63,7 +63,9 @@ export default {
     return {
       articles:[],
       moreInfo:{},
-      check:[true,false,false]
+      check:[true,false,false],
+      isFollow:true,
+      followBtnInfo:'关注'
     }
   },
   created(){
@@ -93,6 +95,14 @@ export default {
           this.check = [true,false,false];
           this.articles = this.author.articleLists.newestCommands;break;
       }
+    },
+    toggleFollow(){
+      this.isFollow = !this.isFollow;
+      if(!this.isFollow){
+        this.followBtnInfo = '已关注';
+      }else if(this.isFollow){
+        this.followBtnInfo = '关注';
+      }
     }
   }
 }
@@ -110,6 +120,14 @@ export default {
   float: left;
   width: 80px;
   height: 80px;
+}
+.author .author-top .following {
+  padding: 8px 0;
+  width: 100px;
+}
+.author .author-top .following span, .follow span {
+  margin-left: 2px;
+  display: inline;
 }
 .author .author-top .author-avatar img {
   width: 100%;

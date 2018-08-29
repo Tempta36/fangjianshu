@@ -22,9 +22,11 @@ export default {
   },
   data(){
     return {
-      display:true,
-      hash:window.location.hash
+      display:true
     }
+  },
+  created(){
+    sessionStorage.setItem('isLogin','false');
   },
   watch:{
     $route(to,from){
@@ -39,9 +41,5 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+
 </style>

@@ -1,9 +1,9 @@
 import * as types from '../mutation-types'
 
 let users = [
-  {"username":"Lucy","password":"123456","login":false},
-  {"username":"qweasd","password":"123456","login":false},
-  {"username":"iopjkl","password":"123456","login":false}
+  {"username":"Lucy","password":"123456",login:false},
+  {"username":"qweasd","password":"123456",login:false},
+  {"username":"iopjkl","password":"123456",login:false}
 ];
 
 const state = {user:{...users[0]}};
@@ -12,7 +12,7 @@ const mutations = {
   [types.SIGN_UP_USER](state,payload){
     users.push({username:payload.username,password:payload.password,login:true});
     if(payload.isChecked){
-      sessionStorage.setItem(payload.username,payload.password);
+      localStorage.setItem(payload.username,payload.password);
     }
     state.user = users[users.length-1];console.log(state.user);
   },
@@ -20,7 +20,6 @@ const mutations = {
     for(let i = 0,len = users.length; i<len; i++){
       if(users[i].username === username){
         state.user = users[i];
-        console.log(state.user);
       }
     }
   }

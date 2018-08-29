@@ -85,7 +85,7 @@ export default {
         tip.className = 'tooltip tooltip-error right in';
         flag +=1;
       }
-      if(this.password === '' || !this.password.match(/^[a-zA-Z]\w{5,17}$/)){
+      if(this.password === '' || this.password.match(/^[a-zA-Z]\w{5,17}$/)){
         let tip = document.getElementById('tooltip3');
         tip.className = 'tooltip tooltip-error right in';
         flag +=1;
@@ -99,7 +99,6 @@ export default {
           mobilePhone:this.mobileNumber,
           password:this.password
         });
-        alert('sign up success and you will log in automatically');
         this.$router.push('/');
       }
     },
