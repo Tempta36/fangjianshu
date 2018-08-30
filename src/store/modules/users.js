@@ -1,16 +1,22 @@
 import * as types from '../mutation-types'
 
 let users = [
-  {"username":"Lucy","password":"123456",login:false},
-  {"username":"qweasd","password":"123456",login:false},
-  {"username":"iopjkl","password":"123456",login:false}
+  {"username":"Lucy","password":"123456",login:false,info:{
+    following:[]
+    }},
+  {"username":"qweasd","password":"123456",login:false,info:{
+      following:[]
+    }},
+  {"username":"iopjkl","password":"123456",login:false,info:{
+      following:[]
+    }}
 ];
 
 const state = {user:{...users[0]}};
 
 const mutations = {
   [types.SIGN_UP_USER](state,payload){
-    users.push({username:payload.username,password:payload.password,login:true});
+    users.push({username:payload.username,password:payload.password,login:true,info:{following:[]}});
     if(payload.isChecked){
       localStorage.setItem(payload.username,payload.password);
     }
@@ -22,6 +28,12 @@ const mutations = {
         state.user = users[i];
       }
     }
+  },
+  [types.CHANGE_USER_INFO](state,payload){
+    payload.follow && state.user.info.following.indexOf(payload.follow) === -1?
+      state.user.info.following.push(payload.follow):'';
+    payload.unfollow && state.user.info.following.indexOf(payload.unfollow) !== -1?
+      state.user.info.following.splice(state.user.info.following.indexOf(payload.unfollow),1):'';
   }
 };
 

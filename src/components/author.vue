@@ -5,7 +5,7 @@
         <a href="#" class="author-avatar">
           <img :src="author.img" alt="">
         </a>
-        <a href="javascript:void(0)" class="btn" :class="{'btn-success':isFollow,follow:isFollow,'following':!isFollow,'btn-default':!isFollow}" @click="toggleFollow()"><i class="iconfont"  :class="{'ic-follow':isFollow,'ic-followed':!isFollow}"></i><span v-text="followBtnInfo">关注</span></a>
+        <a href="javascript:void(0)" class="btn" :class="{'btn-success':!isFollow,follow:!isFollow,'following':isFollow,'btn-default':isFollow}" @click="toggleFollow()"><i class="iconfont"  :class="{'ic-follow':!isFollow,'ic-followed':isFollow}"></i><span :value="followBtnInfo">关注</span></a>
         <a href="javascript:void(0)" class="btn btn-hollow">投稿</a>
         <div class="title"><a href="#" class="name" v-text="author.title"></a></div>
         <div class="info">收录了{{author.info.recordCount}}篇文章<br/>{{author.info.followCount}}人关注</div>
@@ -64,7 +64,6 @@ export default {
       articles:[],
       moreInfo:{},
       check:[true,false,false],
-      isFollow:true,
       followBtnInfo:'关注'
     }
   },
@@ -72,8 +71,29 @@ export default {
     this.chooseArticles('latestComments');
   },
   computed:{
+    isFollow:{
+      get(){
+        if(!this.isLogin){
+          return false;
+        }else if(this.user.info.following.indexOf(this.author.title) === -1){
+          return false;
+        }else {
+          return true;
+        }
+      },
+      set(){}
+    },
+    isLogin:{
+      get(){
+        return Boolean(sessionStorage.getItem('isLogin') === 'true')
+      },
+      set(){
+        sessionStorage.setItem('isLogin','false')
+      }
+    },
     ...mapState({
-      author:state => state.Author.authorInformation[0]
+      author:state => state.Author.authorInformation[0],
+      user:state => state.Users.user
     })
   },
   methods:{
@@ -97,11 +117,29 @@ export default {
       }
     },
     toggleFollow(){
-      this.isFollow = !this.isFollow;
-      if(!this.isFollow){
-        this.followBtnInfo = '已关注';
-      }else if(this.isFollow){
-        this.followBtnInfo = '关注';
+      if(this.isLogin){
+        if(!this.isFollow){
+          this.followBtnInfo = '已关注';
+          this.$store.dispatch('changeAuthorInfo',{
+            title:this.author.title,
+            followCount:Number(this.author.info.followCount)+1
+          });
+          this.$store.dispatch('changeUserInfo',{
+            follow:this.author.title
+          });
+        }else {
+          this.followBtnInfo = '关注';
+          this.$store.dispatch('changeAuthorInfo',{
+            title:this.author.title,
+            followCount:this.author.info.followCount-1
+          });
+          this.$store.dispatch('changeUserInfo',{
+            unfollow:this.author.title
+          });
+        }
+        this.isFollow = !this.isFollow;
+      }else {
+        this.$router.push('/signIn');
       }
     }
   }

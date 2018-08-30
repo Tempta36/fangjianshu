@@ -17,5 +17,12 @@ export const signUpUser = ({commit},payload) =>{
 
 export const getUserInfo = ({commit,state},str) => {
   commit(types.GET_USER_INFO,str);
-  console.log(state.Users.user);
+};
+
+export const changeAuthorInfo = ({commit},payload)=>{
+  commit(types.CHANGE_AUTHOR_INFO,payload);
+};
+
+export const changeUserInfo = ({commit},payload)=>{
+  commit(types.CHANGE_USER_INFO,payload);
 };

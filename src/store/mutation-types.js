@@ -9,3 +9,7 @@ export const ANOTHER_AUTHORS = 'anotherAuthors';
 export const SIGN_UP_USER = 'signUpUser';
 
 export const GET_USER_INFO = 'getUserInfo';
+
+export const CHANGE_AUTHOR_INFO = 'changeAuthorInfo';
+
+export const CHANGE_USER_INFO = 'changeUserInfo';

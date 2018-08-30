@@ -744,7 +744,8 @@ const state = {
       ]
     },
     articleLists:{
-      newestCommands:[{
+      newestCommands:[
+        {
         title:'当CPU飙高时，它在做什么',
         content:'在开发过程中，有时候我们发现JVM占用的CPU居高不下，跟我们的预期不符，这时，CPU在做什么呢？是什么线程让CPU如此忙碌呢？我们通过如下几步，可以查看CPU在执行什么线程。',
         author:'刘振锋',
@@ -769,7 +770,8 @@ const state = {
         admire:1,
         img:'../../static/img/author-newestCommand1.png'
       }],
-      newestRecords:[{
+      newestRecords:[
+        {
         title:'Redisson是如何实现分布式锁的？',
         content:'针对项目中使用的分布式锁进行简单的示例配置以及源码解析，并列举源码中使用到的一些基础知识点，但是没有对redisson中使用到的netty知识进行解析。',
         author:'Java填坑之路',
@@ -794,7 +796,8 @@ const state = {
         admire:0,
         img:'../../static/img/author-newestRecord1.png'
       }],
-      hots:[{
+      hots:[
+        {
         title:'这15个图片网站，至少让你的效率翻一倍！',
         content:'如果你还在用百度搜图，那真是“棒棒哒”，像你这么专一的人不多了。经常有人会问我，你一般在哪找的图片？不少朋友都会有自己的素材库，需要时提取就可以了。不过像我这么懒的人，图片分类都得好久，找图片就更费力了。',
         author:'七小葩',
@@ -848,6 +851,13 @@ const state = {
 };
 
 const mutations = {
+  [types.CHANGE_AUTHOR_INFO](state,payload){
+    let authorInfo = state.authorInformation[0];
+    if(authorInfo.title === payload.title){
+      payload.recordCount >=0? authorInfo.info.recordCount = payload.recordCount:'';
+      payload.followCount >=0?authorInfo.info.followCount = payload.followCount:'';
+    }
+  },
   [types.CONFIRM_AUTHOR](state,theme){
     switch (theme) {
       case '人文社科':
