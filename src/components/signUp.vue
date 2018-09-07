@@ -97,9 +97,11 @@ export default {
         this.$store.dispatch('signUpUser',{
           username:this.nickname,
           mobilePhone:this.mobileNumber,
-          password:this.password
+          password:this.password,
+          login:true
         });
-        this.$router.push('/');
+        sessionStorage.setItem('isLogin','true');
+        history.back(-1);
       }
     },
     //错误提示显示之后，当鼠标聚焦在输入框中，对应的错误提示不显示
